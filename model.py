@@ -75,7 +75,7 @@ df['clean_text'] = df['clean_tokens'].apply(lambda x: return_sentences(x))
 
 # Prepare data for the model. Convert label in to binary
 
-df['label'] = [1 if x == 'No' else 0 for x in df['label']]
+df['label'] = [0 if x == 'No' else 1 for x in df['label']]
 
 
 # Split the dataset
@@ -115,7 +115,7 @@ def manual_query_input(indi_data):
     tfidf_d = tfidf.transform(d)
 
     result = nb.predict(tfidf_d.toarray())  # 0 means indigenous, 1 means not
-    if (result == 0):
+    if (result == 1):
         display_value = "yes,It is Indigenous"
     else:
         display_value = "no, It is not Indigenous"
@@ -136,7 +136,7 @@ f = pd.DataFrame()
 
 
 def getData(hash_input):
-    text_query = hashinput+" "+"-filter:retweets"
+    text_query = hash_input+" "+"-filter:retweets"
     count = 100
     try:
         tweets_obj = tweepy.Cursor(
@@ -162,7 +162,5 @@ def getData(hash_input):
     f['Output'] = mo
     f.replace(0, 'Yes', inplace=True)
     f.replace(1, 'No', inplace=True)
-    headings = f['text'].values.tolist()
-    data = f['Output'].values.tolist()
-
-    return headings, data
+    data = f.values.tolist()
+    return data

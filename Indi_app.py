@@ -17,9 +17,9 @@ def manual():
     return render_template('manual.html')
 
 
-# @app.route('/hashtag_query')
-# def hashtag_query():
-#     return render_template('hashtag_query.html')
+@app.route('/hashtag_query')
+def hashtag_query():
+    return render_template('hashtag_query.html')
 
 
 # @app.route('/scrapper_data')
@@ -39,12 +39,15 @@ def submit():
     return render_template("manual.html", prediction_text=n)
 
 
+headings = ['text', 'output']
 # twitter data prediction
-@ app.route('/hashtag_query', methods=['POST'])
-def submit():
+
+
+@ app.route('/hashtag_query_result', methods=['GET', 'POST'])
+def hashtag_query_result():
     if request.method == "POST":
         scrapper_query = request.form["scrapper_query"]
-        headings, data = m.getData(scrapper_query)
+        data = m.getData(scrapper_query)
         return render_template('scrapper_data.html', headings=headings, data=data)
 
     return render_template('hashtag_query.html')
