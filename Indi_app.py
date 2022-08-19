@@ -1,6 +1,6 @@
 
 from glob import glob
-from flask import Flask, render_template, request
+from flask import Flask, redirect, url_for, render_template, request
 import model as m
 
 app = Flask(__name__)
@@ -12,11 +12,11 @@ def index():
 
 
 @app.route('/manual')
-def manual_input():
+def manual():
     return render_template('manual.html')
 
 
-@app.route('/result', methods=['POST'])
+@ app.route('/manual_query_result', methods=['POST'])
 def submit():
     if request.method == "POST":
         manual_query = request.form["manual_query"]

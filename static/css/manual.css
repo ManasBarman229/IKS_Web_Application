@@ -5,7 +5,7 @@
 }
 
 body {
-  background-image: url('/svg/blob-scene-haikei.svg');
+  background-image: url('/static/img/blob-scene-haikei.svg');
   background-size: cover;
   background-repeat: no-repeat;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
