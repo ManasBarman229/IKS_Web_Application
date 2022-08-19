@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/manual.css">
+    <title>Manual Query</title>
+</head>
+<body>
+    
+    <div class="container">
+        <img src="/images/dawid-zawila-xclq1CPq1M4-unsplash.jpg"
+            alt="image">
+        <div class="container-text">
+            <h1>Indigenous Knowledge?</h1>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium, laboriosam!</p>
+            <form action="/manual_query_result" method="POST">
+                <input type="text" name="manual_query" placeholder="Enter your text here">
+                <button type="submit">Validate</button>
+            </form>            
+            <div class="output">
+                <h4>Result: {{prediction_text}}</h4>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

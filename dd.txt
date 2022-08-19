@@ -1,0 +1,9 @@
+# result
+
+
+# @app.route('/result', methods=['POST'])
+# def submit():
+#    if request.method == "POST":
+#        indi_query = request.form['indi_query']
+#
+#    return render_template("result.html", n=indi_query)
