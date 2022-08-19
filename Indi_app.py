@@ -17,17 +17,14 @@ def manual():
     return render_template('manual.html')
 
 
-@app.route('/hashtag_query')
-def hashtag_query():
-    return render_template('hashtag_query.html')
+# @app.route('/hashtag_query')
+# def hashtag_query():
+#     return render_template('hashtag_query.html')
 
 
-headings, data = m.getData()
-
-
-@app.route('/scrapper_data')
-def scrapper_data():
-    return render_template('scrapper_data.html', headings=headings, data=data)
+# @app.route('/scrapper_data')
+# def scrapper_data():
+#     return render_template('scrapper_data.html', headings=headings, data=data)
 
 # manual data prediction
 
@@ -43,6 +40,14 @@ def submit():
 
 
 # twitter data prediction
+@ app.route('/hashtag_query', methods=['POST'])
+def submit():
+    if request.method == "POST":
+        scrapper_query = request.form["scrapper_query"]
+        headings, data = m.getData(scrapper_query)
+        return render_template('scrapper_data.html', headings=headings, data=data)
+
+    return render_template('hashtag_query.html')
 
 
 # main driver function

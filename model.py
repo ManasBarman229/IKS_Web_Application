@@ -1,4 +1,5 @@
 
+import tweepy
 from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
@@ -59,7 +60,7 @@ def remove_stopwords(text):
     return [word for word in text if word not in nltk.corpus.stopwords.words('english')]
 
 
-df['clean_tokens'] = df['tokens'].apply(lambda x: remove_stopwords(x))
+df['clean_tokens'] = df['filtered_tokens'].apply(lambda x: remove_stopwords(x))
 
 
 # Create sentences to get clean text as input for vectors
@@ -83,15 +84,11 @@ X_train, X_test, y_train, y_test = train_test_split(
     df['clean_text'], df['label'], test_size=0.1)
 
 
-"""***TF-IDF : Term Frequency - Inverse Document Frequency***"""
-
 # vectorization
 
 tfidf = TfidfVectorizer()
 tfidf_train = tfidf.fit_transform(X_train)
 tfidf_test = tfidf.transform(X_test)
-
-# """***Classifiers***"""
 
 
 # Naive Bayes model
@@ -106,10 +103,7 @@ preb = nb.predict(tfidf_train.toarray())
 pred = nb.predict(tfidf_test.toarray())
 
 
-#d='turmeric is good for health'
-#d=d.fillna(' ')
-
-
+# function for manual data query
 def manual_query_input(indi_data):
     d = indi_data
     d = remove_punct(d)
@@ -126,3 +120,49 @@ def manual_query_input(indi_data):
     else:
         display_value = "no, It is not Indigenous"
     return display_value
+
+
+# twitter scrapper
+consumer_key = "Zq3KVYsMbUibAKNWFwecP62YE"
+consumer_secret = "PR1BAPVZjlrKny8V93oKxNAXOiGdlSMpyTbQt7BP0PRClwGRPx"
+access_token = "1554767526067728385-wz0xP9nMUqV5I9roUIP98ZGN1LpAOF"
+access_token_secret = "4W6b8e0dNQElXJYxf2RKahSFRwv76k90ir99MPuYpNllf"
+authorization = tweepy.OAuthHandler(consumer_key, consumer_secret)
+authorization.set_access_token(access_token, access_token_secret)
+api = tweepy.API(authorization, wait_on_rate_limit=True)
+
+
+f = pd.DataFrame()
+
+
+def getData(hash_input):
+    text_query = hashinput+" "+"-filter:retweets"
+    count = 100
+    try:
+        tweets_obj = tweepy.Cursor(
+            api.search_tweets, q=text_query).items(count)
+        tweets_list = [[tweet.text] for tweet in tweets_obj]
+        f = pd.DataFrame(tweets_list)
+
+    except BaseException as e:
+
+        print("something went wrong, ", str(e))
+    f.rename(columns={0: 'text'}, inplace=True)
+    f = f.fillna(' ')
+    f['removed_punc'] = f['text'].apply(lambda x: remove_punct(x))
+    f['tokens'] = f['removed_punc'].apply(lambda x: tokenize(x))
+    f['filtered_tokens'] = f['tokens'].apply(lambda x: remove_small_words(x))
+    f['clean_tokens'] = f['filtered_tokens'].apply(
+        lambda x: remove_stopwords(x))
+    f['clean_text'] = f['clean_tokens'].apply(lambda x: return_sentences(x))
+    tfidf_f = tfidf.transform(f['clean_text'])
+    mo = nb.predict(tfidf_f.toarray())  # 'mo' is the array of outputs(0&1)
+    f.drop(['removed_punc', 'tokens', 'filtered_tokens',
+            'clean_tokens', 'clean_text'], axis='columns', inplace=True)
+    f['Output'] = mo
+    f.replace(0, 'Yes', inplace=True)
+    f.replace(1, 'No', inplace=True)
+    headings = f['text'].values.tolist()
+    data = f['Output'].values.tolist()
+
+    return headings, data

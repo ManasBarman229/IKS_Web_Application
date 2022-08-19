@@ -8,7 +8,7 @@ my_api_secret = "PR1BAPVZjlrKny8V93oKxNAXOiGdlSMpyTbQt7BP0PRClwGRPx"
 auth = tw.OAuthHandler(my_api_key, my_api_secret)
 api = tw.API(auth, wait_on_rate_limit=True)
 
-search_query = "#culture -filter:retweets"
+search_query = "#ayurveda -filter:retweets"
 
 # tweets from the API
 tweets = tw.Cursor(api.search_tweets,
