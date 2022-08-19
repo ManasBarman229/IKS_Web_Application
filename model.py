@@ -1,7 +1,6 @@
 
 from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LogisticRegression
-import pickle
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -13,7 +12,7 @@ import pandas as pd
 
 
 df = pd.read_csv(
-    'C:\\Users\\Manas\\Desktop\\Project\\CSV\\proto-2.csv', encoding='windows-1252')
+    'C:\\Users\\Manas\\Desktop\\Project\\CSV\\dataset.csv', encoding="utf8")
 
 
 df.isnull().sum()
