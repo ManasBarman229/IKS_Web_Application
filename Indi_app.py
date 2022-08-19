@@ -16,6 +16,11 @@ def manual():
     return render_template('manual.html')
 
 
+@app.route('/hashtag_query')
+def hashtag_query():
+    return render_template('hashtag_query.html')
+
+
 @ app.route('/manual_query_result', methods=['POST'])
 def submit():
     if request.method == "POST":

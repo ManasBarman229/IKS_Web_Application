@@ -10,7 +10,7 @@ body {
     background-repeat: no-repeat;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #d6d8dd;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 .query_box{
     background-image: url('/static/img/blob-scene-haikei.svg');
