@@ -1,5 +1,6 @@
 
 from glob import glob
+from turtle import heading
 from flask import Flask, redirect, url_for, render_template, request
 import model as m
 
@@ -21,6 +22,16 @@ def hashtag_query():
     return render_template('hashtag_query.html')
 
 
+headings, data = m.getData()
+
+
+@app.route('/scrapper_data')
+def scrapper_data():
+    return render_template('scrapper_data.html', headings=headings, data=data)
+
+# manual data prediction
+
+
 @ app.route('/manual_query_result', methods=['POST'])
 def submit():
     if request.method == "POST":
@@ -29,6 +40,9 @@ def submit():
         print(result)
         n = result
     return render_template("manual.html", prediction_text=n)
+
+
+# twitter data prediction
 
 
 # main driver function
