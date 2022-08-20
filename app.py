@@ -7,7 +7,7 @@ import model as m
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/home')
 def index():
     return render_template('index.html')
 
