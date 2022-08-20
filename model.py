@@ -161,7 +161,7 @@ def getData(hash_input):
     f.drop(['removed_punc', 'tokens', 'filtered_tokens',
             'clean_tokens', 'clean_text'], axis='columns', inplace=True)
     f['Output'] = mo
-    f.replace(0, 'Yes', inplace=True)
-    f.replace(1, 'No', inplace=True)
+    f.replace(1, 'Yes', inplace=True)
+    f.replace(0, 'No', inplace=True)
     data = f.values.tolist()
     return data
