@@ -147,6 +147,7 @@ def getData(hash_input):
     except BaseException as e:
 
         print("something went wrong, ", str(e))
+
     f.rename(columns={0: 'text'}, inplace=True)
     f = f.fillna(' ')
     f['removed_punc'] = f['text'].apply(lambda x: remove_punct(x))
