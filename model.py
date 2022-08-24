@@ -51,7 +51,7 @@ df['filtered_tokens'] = df['tokens'].apply(lambda x: remove_small_words(x))
 
 
 # Remove stopwords. Here, NLTK corpus list is used for a match.
-# nltk.download('stopwords')
+nltk.download('stopwords')
 
 
 def remove_stopwords(text):
