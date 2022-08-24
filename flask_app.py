@@ -1,13 +1,11 @@
 
-from glob import glob
-from turtle import heading
 from flask import Flask, redirect, url_for, render_template, request
 import model as m
 
 app = Flask(__name__)
 
 
-@app.route('/home')
+@app.route('/')
 def index():
     return render_template('index.html')
 
@@ -55,4 +53,4 @@ def hashtag_query_result():
 
 # main driver function
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
