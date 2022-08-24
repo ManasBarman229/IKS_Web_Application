@@ -11,7 +11,7 @@ import pandas as pd
 
 
 df = pd.read_csv(
-    'https://github.com/ManasBarman229/IKS_Web_Application/blob/c32dce5e8bb60aa7d31a9bb56479876242ea740d/CSV/dataset.csv', encoding="utf8")
+    'CSV\dataset.csv', encoding="utf8")
 
 
 df.isnull().sum()
