@@ -1,4 +1,5 @@
 
+from nltk.corpus import stopwords
 import tweepy
 from sklearn.naive_bayes import GaussianNB
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -52,10 +53,11 @@ df['filtered_tokens'] = df['tokens'].apply(lambda x: remove_small_words(x))
 
 # Remove stopwords. Here, NLTK corpus list is used for a match.
 nltk.download('stopwords')
+stoplist = stopwords.words('english')
 
 
 def remove_stopwords(text):
-    return [word for word in text if word not in nltk.corpus.stopwords.words('english')]
+    return [word for word in text if word not in stoplist]
 
 
 df['clean_tokens'] = df['filtered_tokens'].apply(lambda x: remove_stopwords(x))
