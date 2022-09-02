@@ -164,4 +164,8 @@ def getData(hash_input):
     f.replace(1, 'Yes', inplace=True)
     f.replace(0, 'No', inplace=True)
     data = f.values.tolist()
+    data.to_csv(
+        r'C:\\Users\\Manas\\Desktop\\Project\\CSV\\ayurdeva.csv', index=False)
     return data
+
+getData("Ayurveda")

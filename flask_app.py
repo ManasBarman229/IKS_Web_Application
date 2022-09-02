@@ -1,12 +1,12 @@
 
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, render_template, request
 import model as m
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
 
@@ -27,7 +27,7 @@ def hashtag_query():
 # manual data prediction
 
 
-@ app.route('/manual_query_result', methods=['POST'])
+@ app.route('/manual_query_result', methods=['GET', 'POST'])
 def submit():
     if request.method == "POST":
         manual_query = request.form["manual_query"]
@@ -53,4 +53,4 @@ def hashtag_query_result():
 
 # main driver function
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

@@ -25,7 +25,7 @@ api = tweepy.API(authorization, wait_on_rate_limit=True)
 # text_query = setKeyword(input_key)
 # print(text_query)
 
-text_query = "potato -filter:retweets"
+text_query = "arigato  -filter:retweets"
 
 count = 100
 df = pd.DataFrame()
@@ -43,9 +43,9 @@ df.rename(columns={0: 'text'}, inplace=True)
 # print(df)
 
 
-def getScrapData():
-    return df
+# def getScrapData():
+#     return df
 
 
-# df.to_csv(
-#     r'C:\\Users\\Manas\\Desktop\\Project\\CSV\\twitter_text_query.csv', index=False)
+df.to_csv(
+    r'C:\\Users\\Manas\\Desktop\\Project\\CSV\\arigato.csv', index=False)
