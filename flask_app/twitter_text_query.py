@@ -25,7 +25,7 @@ api = tweepy.API(authorization, wait_on_rate_limit=True)
 # text_query = setKeyword(input_key)
 # print(text_query)
 
-text_query = "arigato  -filter:retweets"
+text_query = "tribal -filter:links"
 
 count = 100
 df = pd.DataFrame()
@@ -38,6 +38,8 @@ except BaseException as e:
 
     print("something went wrong, ", str(e))
 df.rename(columns={0: 'text'}, inplace=True)
+# df[df['text'].map(lambda x: x.isascii())]
+df.text.str.replace('[^a-zA-Z0-9]', '')
 
 
 # print(df)
@@ -48,4 +50,4 @@ df.rename(columns={0: 'text'}, inplace=True)
 
 
 df.to_csv(
-    r'C:\\Users\\Manas\\Desktop\\Project\\CSV\\arigato.csv', index=False)
+    r'C:\\Users\\Manas\\Desktop\\Other\\ikswebapp\\flask_app\\CSV\\tribal.csv', index=False)

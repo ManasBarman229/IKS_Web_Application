@@ -1,6 +1,5 @@
 
 from nltk.corpus import stopwords
-import tweepy
 from sklearn.naive_bayes import GaussianNB
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -9,6 +8,8 @@ import re
 import string as st
 import numpy as np
 import pandas as pd
+import snscrape.modules.twitter as sntwitter
+import itertools
 
 
 df = pd.read_csv(
@@ -123,13 +124,18 @@ def manual_query_input(indi_data):
 
 
 # twitter scrapper
-consumer_key = "Zq3KVYsMbUibAKNWFwecP62YE"
-consumer_secret = "PR1BAPVZjlrKny8V93oKxNAXOiGdlSMpyTbQt7BP0PRClwGRPx"
-access_token = "1554767526067728385-wz0xP9nMUqV5I9roUIP98ZGN1LpAOF"
-access_token_secret = "4W6b8e0dNQElXJYxf2RKahSFRwv76k90ir99MPuYpNllf"
-authorization = tweepy.OAuthHandler(consumer_key, consumer_secret)
-authorization.set_access_token(access_token, access_token_secret)
-api = tweepy.API(authorization, wait_on_rate_limit=True)
+
+text_query = hash_input+'' + \
+    'lang:en  geocode:21.1458,79.0882,2000km exclude:links exclude:mentions exclude:hashtags'
+df = pd.DataFrame(itertools.islice(
+    sntwitter.TwitterSearchScraper(text_query).get_items(), 100))
+
+
+output = pd.DataFrame
+output = df.loc[:, ("rawContent", "url", "date")]
+output.rename(columns={'rawContent': 'text'}, inplace=True)
+
+output.to_csv(r'files\\assamese.csv', index=False)
 
 
 f = pd.DataFrame()
@@ -164,8 +170,9 @@ def getData(hash_input):
     f.replace(1, 'Yes', inplace=True)
     f.replace(0, 'No', inplace=True)
     data = f.values.tolist()
-    data.to_csv(
-        r'C:\\Users\\Manas\\Desktop\\Project\\CSV\\ayurdeva.csv', index=False)
+    # data.to_csv(
+    #     r'C:\\Users\\Manas\\Desktop\\Project\\CSV\\ayurdeva.csv', index=False)
     return data
+
 
 getData("Ayurveda")
