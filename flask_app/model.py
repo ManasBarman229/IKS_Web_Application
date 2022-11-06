@@ -13,7 +13,7 @@ import itertools
 
 
 df = pd.read_csv(
-    'dataset.csv', encoding="utf8")
+    'https://github.com/ManasBarman229/IKS_Web_Application/blob/f7e0472468cc3697ac32ec401ef87149db5d0833/flask_app/dataset.csv', encoding="utf8")
 
 
 df.isnull().sum()
