@@ -1,19 +1,18 @@
 
+import nltk
 from nltk.corpus import stopwords
 from sklearn.naive_bayes import GaussianNB
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-import nltk
 import re
 import string as st
 import numpy as np
 import pandas as pd
-import snscrape.modules.twitter as sntwitter
-import itertools
+# import snscrape.modules.twitter as sntwitter
+# import itertools
 
 
-df = pd.read_csv(
-    'https://github.com/ManasBarman229/IKS_Web_Application/blob/f7e0472468cc3697ac32ec401ef87149db5d0833/flask_app/dataset.csv', encoding="utf8")
+df = pd.read_csv('dataset.csv', encoding="utf8")
 
 
 df.isnull().sum()
@@ -53,7 +52,7 @@ df['filtered_tokens'] = df['tokens'].apply(lambda x: remove_small_words(x))
 
 
 # Remove stopwords. Here, NLTK corpus list is used for a match.
-# nltk.download('stopwords')
+nltk.download('stopwords')
 stoplist = stopwords.words('english')
 
 
@@ -125,35 +124,32 @@ def manual_query_input(indi_data):
 
 # twitter scrapper
 
-text_query = hash_input+'' + \
-    'lang:en  geocode:21.1458,79.0882,2000km exclude:links exclude:mentions exclude:hashtags'
-df = pd.DataFrame(itertools.islice(
-    sntwitter.TwitterSearchScraper(text_query).get_items(), 100))
+# text_query = hash_input+'' + \
+#     'lang:en  geocode:21.1458,79.0882,2000km exclude:links exclude:mentions exclude:hashtags'
+# df = pd.DataFrame(itertools.islice(
+#     sntwitter.TwitterSearchScraper(text_query).get_items(), 100))
 
 
-output = pd.DataFrame
-output = df.loc[:, ("rawContent", "url", "date")]
-output.rename(columns={'rawContent': 'text'}, inplace=True)
+# output = pd.DataFrame
+# output = df.loc[:, ("rawContent", "url", "date")]
+# output.rename(columns={'rawContent': 'text'}, inplace=True)
 
-output.to_csv(r'files\\assamese.csv', index=False)
-
-
-f = pd.DataFrame()
+# output.to_csv(r'files\\assamese.csv', index=False)
 
 
 def getData(hash_input):
-    text_query = hash_input+" "+"-filter:retweets"
-    count = 100
-    try:
-        tweets_obj = tweepy.Cursor(
-            api.search_tweets, q=text_query).items(count)
-        tweets_list = [[tweet.text] for tweet in tweets_obj]
-        f = pd.DataFrame(tweets_list)
+    # text_query = hash_input+" "+"-filter:retweets"
+    # count = 100
+    # try:
+    #     tweets_obj = tweepy.Cursor(
+    #         api.search_tweets, q=text_query).items(count)
+    #     tweets_list = [[tweet.text] for tweet in tweets_obj]
+    #     f = pd.DataFrame(tweets_list)
 
-    except BaseException as e:
+    # except BaseException as e:
 
-        print("something went wrong, ", str(e))
-
+    #     print("something went wrong, ", str(e))
+    f = pd.read_csv('cultural.csv', encoding="utf8")
     f.rename(columns={0: 'text'}, inplace=True)
     f = f.fillna(' ')
     f['removed_punc'] = f['text'].apply(lambda x: remove_punct(x))
@@ -175,4 +171,4 @@ def getData(hash_input):
     return data
 
 
-getData("Ayurveda")
+# getData("Ayurveda")
